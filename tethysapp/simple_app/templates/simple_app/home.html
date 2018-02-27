@@ -1,0 +1,29 @@
+{% extends "simple_app/base.html" %}
+{% load tethys_gizmos %}
+
+{% block header_buttons %}
+{% endblock %}
+
+{% block app_content %}
+  <h1>Underground Water App</h1>
+  <h4>Class: Geospacial Software Development</h4>
+  <h4>UE Shen</h4>
+  <p>assignment: - Add your ArcMap map to a Tethys App</p>
+  <p>date: 02/26/2018</p>
+  <p>assignment requirements:</p>
+  <ol>
+    <li>Home should open a "home page" with the name of the class, name of your app, date, assignment number and main assignment requirements listed.</li>
+    <li>Map View should include an ArcMap Javascript API map with two data sets from your ArcMap Geoserver2 server, toggle buttons to turn off and on a raster layer and vector layer, and popup bubbles with information about the features in your map</li>
+    <li>Data Services will be a page that talks about the data services you have used in your map, how you created the data, where you are hosting the data, what data is included, and any additional data about your data. Also include a link to the geoserver2 data view page for your data.</li>
+    <li>About - the about page will include a picture of you, a link to send you an email, and a little bit about who you are.</li>
+  </ol>
+
+{% endblock %}
+
+{# Use the after_app_content block for modals #}
+{% block after_app_content %}
+  <!-- Example Modal -->
+  <div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-label">
+
+  </div>
+{% endblock %}

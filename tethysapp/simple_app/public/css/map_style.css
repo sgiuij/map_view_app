@@ -1,0 +1,136 @@
+html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    color: #222;
+    background-color: rgb(236,226,217);
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    font-weight: bold;
+    font-size: 10pt;
+}
+
+img {
+    max-width: 100%;
+}
+
+h5 {
+    font-size: 2em;
+    padding:1em;
+    margin: 0em;
+}
+
+#header {
+    margin:70px 0px 0px 0px;
+    padding: 0px 10px 0px 10px;
+    position: absolute;
+    height: 56px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    align-items: center;
+    z-index: 10000;
+}
+
+#content {
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+}
+
+#crumb {
+    padding-left: 1.25em;
+    order: -1;
+}
+
+
+#map {
+    flex: 1 1 70%;
+}
+
+.volume {
+    padding: .5em;
+    font-size: 12pt;
+}
+
+div.books {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 .3em;
+    margin: 0;
+}
+
+div.books a {
+    flex: 0 0 7em;
+    font-weight: normal;
+    margin: .4em;
+    padding-left: .5em;
+    padding-right: .5em;
+    background-color: #fff;
+    color: #222;
+}
+
+div.books a.chapter {
+    flex: 0 0 4em;
+}
+
+
+#header a:link, #header a:visited, #header a:active {
+    color: white;
+    text-decoration: none;
+}
+
+#header a:hover {
+    color: #d0d0ff;
+    text-decoration: underline;
+}
+
+#crumb li:not(:first-child)::before {
+    content: ">";
+    padding: .3em;
+}
+
+
+div.chapterheading b.big {
+    font-size: 140%;
+}
+
+div.navheading {
+    font-size: 13pt;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.navheading a:link, .navheading a:visited, .navheading a:active {
+    color: #222;
+    text-decoration: none;
+}
+
+.navheading a:hover {
+    color: #4488ff;
+    text-decoration: underline;
+}
+
+.navheading .nextprev {
+    position: absolute;
+    right: 1em;
+}
+
+li.match {
+    background-color: #ffffcc;
+}
