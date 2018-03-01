@@ -115,13 +115,13 @@
 		        popupTemplate: template,
 		        visible:false
 		      });
-		      maAquigerLayer = new FeatureLayer({
+		      majorAquiferLayer = new FeatureLayer({
 		        url: "http://geoserver2.byu.edu/arcgis/rest/services/UE_UW/tx_maps/FeatureServer/0",
 		        outFields: ["*"],
 		        popupTemplate: template,
 		        visible:false
 		      });
-		      miAquiferLayer = new FeatureLayer({
+		      minorAquiferLayer = new FeatureLayer({
 		        url: "http://geoserver2.byu.edu/arcgis/rest/services/UE_UW/tx_maps/FeatureServer/1",
 		        outFields: ["*"],
 		        popupTemplate: template,
@@ -134,8 +134,8 @@
 		        visible:false
 		      });
 		      map.add(wellLayer);
-		      map.add(maAquigerLayer);
-		      map.add(miAquiferLayer);
+		      map.add(majorAquiferLayer);
+		      map.add(minorAquiferLayer);
 		      map.add(countyLayer);
 
 		    });
@@ -143,18 +143,19 @@
 
 		function showLayers(){
 			wellLayer.visible=false;
-			maAquigerLayer.visible=false;
-			miAquiferLayer.visible=false;
+			majorAquiferLayer.visible=false;
+			minorAquiferLayer.visible=false;
 			countyLayer.visible=false;
 
 			if (document.getElementById("wellLayer").checked){
 				wellLayer.visible=true;
 			}
-			if (document.getElementById("maAquigerLayer").checked){
-				maAquigerLayer.visible=true;
+			if (document.getElementById("majorAquiferLayer").checked){
+				console.log("ppppppp");
+				majorAquiferLayer.visible=true;
 			}
-			if (document.getElementById("miAquiferLayer").checked){
-				miAquiferLayer.visible=true;
+			if (document.getElementById("minorAquiferLayer").checked){
+				minorAquiferLayer.visible=true;
 			}
 			if (document.getElementById("countyLayer").checked){
 				countyLayer.visible=true;

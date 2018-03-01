@@ -49,64 +49,11 @@ h5 {
     align-content: stretch;
 }
 
-#crumb {
-    padding-left: 1.25em;
-    order: -1;
-}
-
 
 #map {
     flex: 1 1 70%;
 }
 
-.volume {
-    padding: .5em;
-    font-size: 12pt;
-}
-
-div.books {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0 .3em;
-    margin: 0;
-}
-
-div.books a {
-    flex: 0 0 7em;
-    font-weight: normal;
-    margin: .4em;
-    padding-left: .5em;
-    padding-right: .5em;
-    background-color: #fff;
-    color: #222;
-}
-
-div.books a.chapter {
-    flex: 0 0 4em;
-}
-
-
-#header a:link, #header a:visited, #header a:active {
-    color: white;
-    text-decoration: none;
-}
-
-#header a:hover {
-    color: #d0d0ff;
-    text-decoration: underline;
-}
-
-#crumb li:not(:first-child)::before {
-    content: ">";
-    padding: .3em;
-}
-
-
-div.chapterheading b.big {
-    font-size: 140%;
-}
 
 div.navheading {
     font-size: 13pt;

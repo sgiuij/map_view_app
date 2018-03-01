@@ -1,0 +1,33 @@
+
+{% extends "simple_app/base.html" %}
+{% load tethys_gizmos %}
+{% load staticfiles %}
+
+{% block header_buttons %}
+{% endblock %}
+
+{% block app_content %}
+    <h1>APP UI Mockup</h1>
+    <p>This mockup below is a basic design of my app. It shows a map window on the right, with options on the left where
+        users will be able to make their choices to select the display and data they are interested in. </p>
+    <img src="{% static 'simple_app/images/110.jpg' %}" >
+    <p>The options on the left will include interest of time and location. Location can include aquifer, county, or drawing
+        an area on the map to select the wells whithin. The displayed data will be an interpolation from both time and
+        location. The surfaces are calculated from underground water level from wells.</p>
+    <img src="{% static 'simple_app/images/111.jpg' %}" >
+    <p>For example, the outlined box is the selected area where the yellow dots illustrates the wells on the map. And in the
+        picture below, it demonstrates the underground water level represented by color on the date of 01/19/2010 as
+        selected on the left.</p>
+    <img src="{% static 'simple_app/images/112.jpg' %}" >
+    <p>I am also thinking of doing a button called “adv” where you can set desired colors that will be shown on the
+        map. </p>
+
+{% endblock %}
+
+{# Use the after_app_content block for modals #}
+{% block after_app_content %}
+<!-- Example Modal -->
+<div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-label">
+
+</div>
+{% endblock %}

@@ -8,16 +8,9 @@ const UndergroundWater = (function (){
 // AIzaSyBVrFz6pyVtooI7emyrRWUDVi3tcCJMysY
 // private method declarations
 
-let init;
 let layerSelector;
 	function layserSelector(){
-		document.getElementById("wellLayer").checked
+		document.getElementById("wellLayer").checked;
 	}
-
-    return {
-        init(callback){
-        	init(callback);
-        }
-    };
 
 }());
