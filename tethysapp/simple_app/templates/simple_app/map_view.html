@@ -24,12 +24,15 @@
 
 	<div id = "header">
 		<div id = "data_layer">
+
+			{% gizmo date_picker %}
+			{% gizmo date_picker_error %}
 			<input type="checkbox" id="wellLayer" name="All Wells" onclick="showLayers()">
     		<label>All Wells</label>
-    		<input type="checkbox" id="maAquiferLayer" name="Major Aquifers" onclick="showLayers()">
+    		<input type="checkbox" id="majorAquiferLayer" name="Major Aquifers" onclick="showLayers()">
     		<label>Major Aquifers</label>
 			<br>
-			<input type="checkbox" id="miAquigerLayer" name="Minor Aquifers" onclick="showLayers()">
+			<input type="checkbox" id="minorAquiferLayer" name="Minor Aquifers" onclick="showLayers()">
     		<label>Minor Aquifers</label>
     		<input type="checkbox" id="countyLayer" name="Counties" onclick="showLayers()">
     		<label>Counties</label>
@@ -148,6 +151,7 @@
 			countyLayer.visible=false;
 
 			if (document.getElementById("wellLayer").checked){
+			 	console.log("sss")
 				wellLayer.visible=true;
 			}
 			if (document.getElementById("majorAquiferLayer").checked){
@@ -155,9 +159,11 @@
 				majorAquiferLayer.visible=true;
 			}
 			if (document.getElementById("minorAquiferLayer").checked){
+			console.log("ddd")
 				minorAquiferLayer.visible=true;
 			}
 			if (document.getElementById("countyLayer").checked){
+			console.log("hhh")
 				countyLayer.visible=true;
 			}
 		}
