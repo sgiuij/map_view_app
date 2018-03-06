@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from tethys_sdk.gizmos import Button, DatePicker
+from tethys_sdk.gizmos import Button, DatePicker, SelectInput
 
 
 @login_required()
@@ -89,15 +89,17 @@ def map_view(request):
                              today_button=True,
                              initial='February 15, 2014')
 
-    date_picker_error = DatePicker(name='data2',
-                                   display_text='Date',
-                                   initial='10/2/2013',
-                                   disabled=True,
-                                   error='Here is my error text.')
+    select_input2 = SelectInput(display_text='Select2',
+                                name='select2',
+                                multiple=False,
+                                options=[('One', '1'), ('Two', '2'), ('Three', '3')],
+                                initial=['Three'],
+                                select2_options={'placeholder': 'Select a number',
+                                                 'allowClear': True})
 
     context = {
-        'date_picker': date_picker,
-        'date_picker_error': date_picker_error,
+        'select_input2': select_input2,
+        'date_picker': date_picker
     }
 
     return render(request, 'simple_app/map_view.html', context)
