@@ -10,167 +10,49 @@
 
 <head>
 
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="https://js.arcgis.com/4.6/esri/css/main.css">
-	<link rel="stylesheet" type="text/css" href="{% static 'simple_app/css/map_style.css' %}">
-	<script src="https://js.arcgis.com/4.6/"></script>
-	<script src="{% static 'simple_app/js/undergroundwater.js' %}" type="text/javascript"></script>
-	<style type="text/css">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/4.6/esri/css/main.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'simple_app/css/map_style.css' %}">
+    <script src="https://js.arcgis.com/4.6/"></script>
+    <script src="{% static 'simple_app/js/undergroundwater.js' %}" type="text/javascript"></script>
+    <script src="{% static 'simple_app/js/map_gp.js' %}" type="text/javascript"></script>
+    <style type="text/css">
 
-	</style>
-	<script type="text/javascript"></script>
+    </style>
+    <script type="text/javascript"></script>
 </head>
 <body>
 
-	<div id = "header">
-		<div id = "data_layer">
+<div id="header">
+    <div id="data_layer">
 
-			{% gizmo date_picker %}
-			{% gizmo select_input2 %}
+        {% gizmo date_picker %}
+        {% gizmo select_input2 %}
 
-			<input type="checkbox" id="wellLayer" name="All Wells" onclick="showLayers()">
-    		<label>All Wells</label>
-    		<input type="checkbox" id="majorAquiferLayer" name="Major Aquifers" onclick="showLayers()">
-    		<label>Major Aquifers</label>
-			<br>
-			<input type="checkbox" id="minorAquiferLayer" name="Minor Aquifers" onclick="showLayers()">
-    		<label>Minor Aquifers</label>
-    		<input type="checkbox" id="countyLayer" name="Counties" onclick="showLayers()">
-    		<label>Counties</label>
-		</div>
+        <input type="checkbox" id="wellLayer" name="All Wells" onclick="showLayers()">
+        <label>All Wells</label>
+        <input type="checkbox" id="majorAquiferLayer" name="Major Aquifers" onclick="showLayers()">
+        <label>Major Aquifers</label>
+        <br>
+        <input type="checkbox" id="minorAquiferLayer" name="Minor Aquifers" onclick="showLayers()">
+        <label>Minor Aquifers</label>
+        <input type="checkbox" id="countyLayer" name="Counties" onclick="showLayers()">
+        <label>Counties</label>
+    </div>
 
-	</div>
-	<div id = "content">
+</div>
+<div id="content">
 
-		<div id = "navigate">
-			<div id="locate">
+    <div id="navigate">
+        <div id="locate">
 
-			</div>
-			<div id="time_period">
+        </div>
+        <div id="time_period">
 
-			</div>
-		</div>
-		<div id = "map"></div>
-	</div>
-	<script type="text/javascript">
-		var map;
-		var tx_wells;
-		var tx_minor_aquifers;
-		require([
-			"esri/Map",
-			"esri/layers/MapImageLayer",
-			"esri/views/MapView",
-			"esri/layers/FeatureLayer",
-			"dojo/domReady!"
-			], function(Map, MapImageLayer, MapView, FeatureLayer){
-				map = new Map({
-					basemap: "streets"
-				});
-
-				// tempFunc();
-
-<!--#				tx_wells = new MapImageLayer({-->
-<!--#					url:"http://geoserver2.byu.edu/arcgis/rest/services/UE_UW/tx_maps/FeatureServer/3",-->
-<!--#					visible: false-->
-<!--#				});-->
-<!--#-->
-<!--#				map.layers.add(tx_wells);-->
-
-				var view = new MapView({
-					container:"map",
-					map: map,
-					center:[-98.8, 31.4],
-					zoom:6
-				})
-
-			var template = { // autocasts as new PopupTemplate()
-		        title: "Marriage in NY, Zip Code: {name}+{stateplane}+{pop_lastce}",
-		        content: "<p>As of 2015, <b>ee%</b> of the population in this zip code is married.</p>" +
-		          "<ul><li>ee people are married</li>" +
-		          "<li>ee have never married</li>" +
-		          "<li>ee are divorced</li></ul>",
-		        fieldInfos: [{
-		          fieldName: "name",
-		          format: {
-		            digitSeparator: true, // Use a comma separator for large numbers
-		            places: 0 // Sets the number of decimal places to 0 and rounds up
-		          }
-		        }, {
-		          fieldName: "stateplane",
-		          format: {
-		            digitSeparator: true,
-		            places: 0
-		          }
-		        }, {
-		          fieldName: "pop_lastce",
-		          format: {
-		            digitSeparator: true,
-		            places: 0
-		          }
-		        }]
-		      };
-
-		      // Reference the popupTemplate instance in the
-		      // popupTemplate property of FeatureLayer
-
-		      wellLayer = new FeatureLayer({
-		        url: "http://geoserver2.byu.edu/arcgis/rest/services/UE_UW/tx_maps/FeatureServer/3",
-		        outFields: ["*"],
-		        popupTemplate: template,
-		        visible:false
-		      });
-		      majorAquiferLayer = new FeatureLayer({
-		        url: "http://geoserver2.byu.edu/arcgis/rest/services/UE_UW/tx_maps/FeatureServer/0",
-		        outFields: ["*"],
-		        popupTemplate: template,
-		        visible:false
-		      });
-		      minorAquiferLayer = new FeatureLayer({
-		        url: "http://geoserver2.byu.edu/arcgis/rest/services/UE_UW/tx_maps/FeatureServer/1",
-		        outFields: ["*"],
-		        popupTemplate: template,
-		        visible:false
-		      });
-		      countyLayer = new FeatureLayer({
-		        url: "http://geoserver2.byu.edu/arcgis/rest/services/UE_UW/tx_maps/FeatureServer/2",
-		        outFields: ["*"],
-		        popupTemplate: template,
-		        visible:false
-		      });
-		      map.add(wellLayer);
-		      map.add(majorAquiferLayer);
-		      map.add(minorAquiferLayer);
-		      map.add(countyLayer);
-
-		    });
-
-
-		function showLayers(){
-			wellLayer.visible=false;
-			majorAquiferLayer.visible=false;
-			minorAquiferLayer.visible=false;
-			countyLayer.visible=false;
-
-			if (document.getElementById("wellLayer").checked){
-			 	console.log("sss")
-				wellLayer.visible=true;
-			}
-			if (document.getElementById("majorAquiferLayer").checked){
-				console.log("ppppppp");
-				majorAquiferLayer.visible=true;
-			}
-			if (document.getElementById("minorAquiferLayer").checked){
-			console.log("ddd")
-				minorAquiferLayer.visible=true;
-			}
-			if (document.getElementById("countyLayer").checked){
-			console.log("hhh")
-				countyLayer.visible=true;
-			}
-		}
-
-
-	</script>
+        </div>
+    </div>
+    <div id="map"></div>
+</div>
 
 </body>
 
@@ -179,8 +61,8 @@
 
 {# Use the after_app_content block for modals #}
 {% block after_app_content %}
-  <!-- Example Modal -->
-  <div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-label">
+<!-- Example Modal -->
+<div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-label">
 
-  </div>
+</div>
 {% endblock %}
