@@ -1,6 +1,13 @@
 		var map;
 		var tx_wells;
 		var tx_minor_aquifers;
+		var radius_input;
+
+		function radius_reader(){
+		    var radius_input = document.getElementById("slider")
+		    radius_input.innerHTML = radius_input.value
+		    alert(test)
+		}
 		require([
 			"esri/Map",
 			"esri/layers/GraphicsLayer",
@@ -43,7 +50,7 @@
                 color: [0,0,0],
                 outline: { // autocasts as new SimpleLineSymbol()
                     color: [169,169,169],
-                    width: 1
+                    width: 0.5
                 }
             };
 
@@ -83,10 +90,9 @@
                 featureSet.features = inputGraphicContainer;
 
                 var bfDistance = new LinearUnit();
-                bfDistance.distance = 50;
+                bfDistance.distance = 5;
                 bfDistance.units = "miles";
 
-                // input parameters
                 var params = {
                     "Point": featureSet,
                     "Distance": bfDistance
@@ -133,13 +139,16 @@
             }
 
             function drawResult_wells(data){
-                console.log("1111111111111111111111111")
-                console.log(data)
-                var wells_feature = data.value.features[0];
-                console.log("222222222222")
+                var wells_feature = data.value.features;
                 console.log(wells_feature)
-                wells_feature.symbol = wellsSymbol;
-                graphicsLayer.add(wells_feature);
+                for (wells in wells_feature){
+                    console.log("ssssssssssssss")
+                    console.log(typeof wells_feature[wells])
+                    console.log(wells_feature[wells])
+                    wells_feature[wells].symbol = wellsSymbol;
+                    graphicsLayer.add(wells_feature[wells]);
+                }
+
             }
 
             function drawResultErrBack_wells(err) {
