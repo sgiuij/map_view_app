@@ -63,6 +63,19 @@ div.navheading {
     justify-content: center;
 }
 
+#processing_display {
+    width:80px;
+    opacity: 0.5;
+    width: Xu;
+    height: Yu;
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    margin-left: -(X/2)u;
+    margin-top: -(Y/2)u;
+
+}
+
 .navheading a:link, .navheading a:visited, .navheading a:active {
     color: #222;
     text-decoration: none;
