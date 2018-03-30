@@ -1,13 +1,21 @@
 		var map;
+		var app;
+		var view;
 		var tx_wells;
 		var tx_minor_aquifers;
-		var radius_input;
+		var selectedWellLayer;
+		var radius;
+		var radius_slider = document.getElementById("input_range");
+        var output = document.getElementById("radius_val");
+        var result = document.getElementById("points_layer").checked;
+        console.log(result)
 
-		function radius_reader(){
-		    var radius_input = document.getElementById("slider")
-		    radius_input.innerHTML = radius_input.value
-		    alert(test)
-		}
+        output.innerHTML = radius_slider.value;
+        radius_slider.oninput = function() {
+            output.innerHTML = this.value;
+            radius = output.innerHTML;
+        }
+
 		require([
 			"esri/Map",
 			"esri/layers/GraphicsLayer",
@@ -27,9 +35,9 @@
 				});
 
 				var graphicsLayer = new GraphicsLayer();
-                map.add(graphicsLayer);
 
-            var view = new MapView({
+
+            view = new MapView({
                 container:"map",
                 map: map,
                 center:[-98.8, 31.4],
@@ -71,18 +79,44 @@
 
             view.on("click", bufferPoint);
 
+//            function removeBufferredLayers(){
+//                var item = "_items";
+//                var sublayerhandles = "postscript";
+//                var kk = map.layers[item]
+//                console.log(kk)
+//
+//                for ( k in map.layers[item]){
+//                console.log(k)
+//                console.log(map.layers[item][k])
+//                console.log(typeof map.layers[item][k])
+//                console.log(Object.keys(map.layers[item][k]))
+//                console.log(map.layers[item][k].hasOwnProperty(sublayerhandles))
+//                    if (sublayerhandles in map.layers[item][k]){
+//                        console.log('sdfasdfasdfasd')
+//                        console.log(map.layers[item][sublayerhandles])
+//                        if (map.layers[item][sublayerhandles].length==2){
+//                            delete map.layers[k]
+//                            console.log(map.layers)
+//                        }
+//                    }
+//                }
+//            }
             function bufferPoint(event) {
-                graphicsLayer.removeAll();
+//                graphicsLayer.removeAll();
+                map.add(graphicsLayer);
                 var point = new Point({
                     longitude: event.mapPoint.longitude,
                     latitude: event.mapPoint.latitude
                 });
-                console.log(point)
                 var inputGraphic = new Graphic({
                     geometry: point,
                     symbol: markerSymbol
                 });
                 graphicsLayer.add(inputGraphic);
+                if (selectedWellLayer===false){
+//                    graphicsLayer.visible = false;
+                }
+//                if (selectedWellLayer){}
 
                 var inputGraphicContainer = [];
                 inputGraphicContainer.push(inputGraphic);
@@ -90,18 +124,15 @@
                 featureSet.features = inputGraphicContainer;
 
                 var bfDistance = new LinearUnit();
-                bfDistance.distance = 5;
+                bfDistance.distance = radius;
                 bfDistance.units = "miles";
 
                 var params = {
                     "Point": featureSet,
                     "Distance": bfDistance
                 };
-                console.log(featureSet);
                 gp.submitJob(params).then(completeCallback, errBack, statusCallback);
-                var job = gp_wells.submitJob(params);
-                job.then(completeCallback_wells, errBack, statusCallback);
-
+                gp_wells.submitJob(params).then(completeCallback_wells, errBack_wells, statusCallback_wells);
             }
 
             function completeCallback(result){
@@ -115,6 +146,8 @@
                 resultLayer.opacity = 0.7;
                 resultLayer.title = "surface";
                 // add the result layer to the map
+                var text = map.layers;
+                console.log(text)
                 map.layers.add(resultLayer);
             }
 
@@ -132,23 +165,31 @@
 
             function statusCallback(data) {
                 console.log(data.jobStatus);
+                if (data.jobStatus==="job-submitted"){
+                    document.getElementById("processing_display").innerHTML="<img src=\'/static/simple_app/images/loading.gif\'>"
+                }
+                if (data.jobStatus==="job-succeeded"){
+                    document.getElementById("processing_display").innerHTML=""
+                }
             }
 
             function statusCallback_wells(data) {
-                console.log(data.jobStatus);
+
+                console.log(typeof data.jobStatus);
+                if (data.jobStatus==="job-submitted"){
+                    document.getElementById("processing_display").innerHTML="<img src=\'/static/simple_app/images/loading.gif\'>"
+                }
+                if (data.jobStatus==="job-succeeded"){
+                    document.getElementById("processing_display").innerHTML=""
+                }
             }
 
             function drawResult_wells(data){
                 var wells_feature = data.value.features;
-                console.log(wells_feature)
                 for (wells in wells_feature){
-                    console.log("ssssssssssssss")
-                    console.log(typeof wells_feature[wells])
-                    console.log(wells_feature[wells])
                     wells_feature[wells].symbol = wellsSymbol;
                     graphicsLayer.add(wells_feature[wells]);
                 }
-
             }
 
             function drawResultErrBack_wells(err) {
@@ -215,6 +256,12 @@
 		      map.add(minorAquiferLayer);
 		      map.add(countyLayer);
 
+		      app = {
+		        "view": view,
+		        "bufferPoint": bufferPoint,
+		        "graphicsLayer":graphicsLayer
+		      }
+
 		    });
 
 
@@ -223,6 +270,11 @@
 			majorAquiferLayer.visible=false;
 			minorAquiferLayer.visible=false;
 			countyLayer.visible=false;
+			selectedWellLayer = false;
+
+            if (document.getElementById("points_layer").checked){
+				selectedWellLayer = true;
+			}
 
 			if (document.getElementById("wellLayer").checked){
 				wellLayer.visible=true;
@@ -236,4 +288,9 @@
 			if (document.getElementById("countyLayer").checked){
 				countyLayer.visible=true;
 			}
+		}
+
+		function removeAll(){
+		    map.layers.removeAll();
+		    app.graphicsLayer.removeAll();
 		}

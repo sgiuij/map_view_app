@@ -21,27 +21,7 @@ def map_view(request):
     Controller for the app home page.
     """
 
-    select_input = SelectInput(display_text='test input',
-                                name='select2',
-                                multiple=False,
-                                options=[('One', '1'), ('Two', '2'), ('Three', '3')],
-                                initial=['Three'],
-                                select2_options={'placeholder': 'Select a number',
-                                                 'allowClear': True})
-    slider = RangeSlider(display_text='Radius',
-                          name='slider2',
-                          min=1,
-                          max=20,
-                          initial=1,
-                          step=4,
-                          attributes={
-                            "onclick": "radius_reader();"
-                          }
-                        )
-
     context = {
-        'select_input': select_input,
-        'slider': slider
     }
 
     return render(request, 'simple_app/map_view.html', context)

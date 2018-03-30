@@ -17,8 +17,22 @@
   <li class="separator"></li>
 
     <div id="base_addition">
-        {% gizmo select_input %}
-        {% gizmo slider %}
+        <div class="radius_slider">
+          <input type="range" min="1" max="25" value="1" class="slider" id="input_range">
+            <div id="radius_output">
+                Value: <span id="radius_val"></span>
+            </div>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" id="points_layer" value="wells layer" onclick="showLayers()" checked>
+          <span class="switchslider round"></span>
+        </label>
+
+        <label class="switch">
+          <input type="checkbox" id="waterlevel_layer" value="water level layer" onclick="showLayers()" checked>
+          <span class="switchslider round"></span>
+        </label>
       <div id="processing_display"></div>
     </div>
 {% endblock %}
@@ -32,7 +46,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'simple_app/css/map_style.css' %}">
     <script src="https://js.arcgis.com/4.6/"></script>
     <script src="{% static 'simple_app/js/undergroundwater.js' %}" type="text/javascript"></script>
-    <script src="{% static 'simple_app/js/map_gp.js' %}" type="text/javascript"></script>
     <style type="text/css">
 
     </style>
@@ -43,8 +56,6 @@
 <div id="header">
     <div id="data_layer">
 
-
-
         <input type="checkbox" id="wellLayer" name="All Wells" onclick="showLayers()">
         <label>All Wells</label>
         <input type="checkbox" id="majorAquiferLayer" name="Major Aquifers" onclick="showLayers()">
@@ -54,21 +65,25 @@
         <label>Minor Aquifers</label>
         <input type="checkbox" id="countyLayer" name="Counties" onclick="showLayers()">
         <label>Counties</label>
+        <br>
+        <button id="clear_map" onclick="removeAll()">Clear All</button>
+
     </div>
 
-</div>
-<div id="content">
-
-    <div id="navigate">
-        <div id="locate">
-
-        </div>
-        <div id="time_period">
-
-        </div>
     </div>
-    <div id="map"></div>
-</div>
+    <div id="content">
+
+        <div id="navigate">
+            <div id="locate">
+
+            </div>
+            <div id="time_period">
+
+            </div>
+        </div>
+        <div id="map"></div>
+    </div>
+    <script src="{% static 'simple_app/js/map_gp.js' %}" type="text/javascript"></script>
 
 </body>
 

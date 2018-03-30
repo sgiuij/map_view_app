@@ -8,7 +8,7 @@ class SimpleApp(TethysAppBase):
 
     name = 'Simple App'
     index = 'simple_app:home'
-    icon = 'simple_app/images/icon1.gif'
+    icon = 'simple_app/images/icon.png'
     package = 'simple_app'
     root_url = 'simple-app'
     color = '#2c3e50'
