@@ -131,8 +131,12 @@
                     "Point": featureSet,
                     "Distance": bfDistance
                 };
-                gp.submitJob(params).then(completeCallback, errBack, statusCallback);
-                gp_wells.submitJob(params).then(completeCallback_wells, errBack_wells, statusCallback_wells);
+                if (selectedWellLayer===true){
+                    gp.submitJob(params).then(completeCallback, errBack, statusCallback);
+                }
+                if (selectedBuffer===true){
+                    gp_wells.submitJob(params).then(completeCallback_wells, errBack_wells, statusCallback_wells);
+                }
             }
 
             function completeCallback(result){
@@ -157,10 +161,12 @@
 
             function errBack(err) {
                 console.log("gp error: ", err);
+                document.getElementById("processing_display").innerHTML="<h5>something went wrong, try a different point or smaller radius</h5>"
             }
 
             function errBack_wells(err) {
                 console.log("gp error: ", err);
+                document.getElementById("processing_display").innerHTML="<h5>something went wrong, try a different point or smaller radius</h5>"
             }
 
             function statusCallback(data) {
@@ -271,9 +277,13 @@
 			minorAquiferLayer.visible=false;
 			countyLayer.visible=false;
 			selectedWellLayer = false;
+			selectedBuffer = false;
 
             if (document.getElementById("points_layer").checked){
 				selectedWellLayer = true;
+			}
+			if (document.getElementById("waterlevel_layer").checked){
+				selectedBuffer = true;
 			}
 
 			if (document.getElementById("wellLayer").checked){
