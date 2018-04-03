@@ -96,7 +96,6 @@
                     symbol: markerSymbol
                 });
                 graphicsLayer.add(inputGraphic);
-
                 var inputGraphicContainer = [];
                 inputGraphicContainer.push(inputGraphic);
                 var featureSet = new FeatureSet();
@@ -113,7 +112,11 @@
                 gp.submitJob(params).then(completeCallback, errBack, statusCallback);
 
                 gp_wells.submitJob(params).then(completeCallback_wells, errBack_wells, statusCallback_wells);
-
+                if (document.getElementById("waterlevel_layer").checked){
+                    test(true);
+                }else{
+                    test(false);
+                }
             }
 
             function completeCallback(result){
@@ -183,7 +186,7 @@
         //				selectedWellLayer = true;
                     }
                 }
-                  view.goTo(graphicsLayer.fullExtent);
+
             }
 
             function drawResultErrBack_wells(err) {
@@ -258,6 +261,16 @@
 		      }
 
 		    });
+
+		function test(bool){
+		if (bool===true){
+                console.log('kkkkkkkkkkkkkkkkkkkkk')
+                document.getElementById("atr_table").innerHTML="<img src=\'/static/simple_app/images/attribute.jpg\'>";
+
+            }else{
+                document.getElementById("atr_table").innerHTML="";
+            }
+		}
 
         function visibilityButton(bool){
             var item = "_items";
