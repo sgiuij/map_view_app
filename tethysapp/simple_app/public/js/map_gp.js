@@ -183,6 +183,7 @@
         //				selectedWellLayer = true;
                     }
                 }
+                  view.goTo(graphicsLayer.fullExtent);
             }
 
             function drawResultErrBack_wells(err) {
@@ -267,6 +268,13 @@
                 if (imgformat in map.layers[item][k]){
                     map.layers[item][k]['visible']=bool;
                 }
+            }
+            if (bool===true){
+                console.log('kkkkkkkkkkkkkkkkkkkkk')
+                document.getElementById("atr_table").innerHTML="<img src=\'/static/simple_app/images/attribute.jpg\'>";
+
+            }else{
+                document.getElementById("atr_table").innerHTML="";
             }
         }
 
