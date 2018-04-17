@@ -6,7 +6,7 @@ class SimpleApp(TethysAppBase):
     Tethys app class for Simple App.
     """
 
-    name = 'Simple App'
+    name = 'TEXAS Well Distribution'
     index = 'simple_app:home'
     icon = 'simple_app/images/icon.png'
     package = 'simple_app'

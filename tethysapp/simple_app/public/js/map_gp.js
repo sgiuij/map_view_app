@@ -220,13 +220,18 @@ require([
         var graphic = response.results[0].graphic;
             var attributes = graphic.attributes;
             var well_depth = attributes.WellDepth;
-            console.log(well_depth)
-            document.getElementById('buffer_pointer').innerHTML="<p>"+well_depth+"</p>"
+            var well_ID = attributes.FID_wells;
+            var elevation = attributes.LandElev
+            console.log("333333333")
+            console.log(attributes)
+            document.getElementById('buffer_pointer').innerHTML="<h6> well ID: "+well_ID+"</h6>"
+                                                                + "<h6> Well Depth: "+well_depth+" ft</h6>"
+                                                                + "<h6> Land Elevation: "+elevation+" ft</h6>"
 
         }
         console.log(graphicsLayer)
           console.log(highlight_marker)
-          console.log("333333333")
+
 //        var highlight_marker = {
 //            type: "unique-value", // autocasts as new UniqueValueRenderer()
 //            field: "NAME",
