@@ -27,12 +27,10 @@
 {% block app_content %}
 {% endblock %}
 
-<!--{% block app_actions %}-->
-<!--{% endblock %}-->
-
 {% block content_dependent_styles %}
   {{ block.super }}
   <link href="{% static 'simple_app/css/main.css' %}" rel="stylesheet"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 {% endblock %}
 
 {% block scripts %}

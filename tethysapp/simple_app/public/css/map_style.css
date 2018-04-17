@@ -26,13 +26,16 @@ h5 {
 
 #header {
     margin:70px 0px 0px 0px;
-    padding: 0px 10px 0px 10px;
+    padding: 15px;
     display: flex;
     position:absolute;
     flex-direction: row;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
     align-items: center;
     z-index: 10000;
+    background-color: rgba(239, 239, 239, 0.7);
+    color: rgb(44, 62, 80);
+
 }
 
 #content {
@@ -48,11 +51,9 @@ h5 {
     align-content: stretch;
 }
 
-
 #map {
     flex: 1 1 70%;
 }
-
 
 div.navheading {
     font-size: 13pt;
@@ -60,19 +61,6 @@ div.navheading {
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
-
-#processing_display {
-    width:80px;
-    opacity: 0.5;
-    width: Xu;
-    height: Yu;
-    position: absolute;
-    top: 50%;
-    left: 30%;
-    margin-left: -(X/2)u;
-    margin-top: -(Y/2)u;
-
 }
 
 .navheading a:link, .navheading a:visited, .navheading a:active {
@@ -109,8 +97,6 @@ li.match {
     box-shadow: 0px 4px 4px 0px #999;
 }
 
-
-
 .slidecontainer {
     width: 100%; /* Width of the outside container */
 }
@@ -138,7 +124,7 @@ li.match {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #4CAF50;
+    background: #2c3e50;
     cursor: pointer;
 }
 
@@ -146,10 +132,9 @@ li.match {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #4CAF50;
+    background: #2c3e50;
     cursor: pointer;
 }
-
 
 /*switch toggle*/
 .switch {
@@ -157,6 +142,7 @@ li.match {
   display: inline-block;
   width: 60px;
   height: 34px;
+  margin-bottom:0px;
 }
 
 /* Hide default HTML checkbox */
@@ -188,7 +174,7 @@ li.match {
 }
 
 input:checked + .switchslider {
-  background-color: #2196F3;
+  background-color: #2c3e50;
 }
 
 input:focus + .switchslider {
@@ -208,4 +194,80 @@ input:checked + .switchslider:before {
 
 .switchslider.round:before {
   border-radius: 50%;
+}
+
+#toggles_div {
+    text-align: center;
+}
+
+#radius_output{
+    margin: 7px;
+}
+
+.wells_toggle{
+    vertical-align:0px;
+    top:0px;
+    padding-top:10px;
+    display:inline-block;
+}
+
+.side_toggle{
+    width:40%;
+    display:inline-block;
+}
+
+.map_toggle{
+    width:50%;
+    display:inline;
+    margin: 0px 15px 0px 15px;
+    text-align: center;
+}
+
+.toggle_label{
+    text-align: center;
+}
+
+#app-actions{
+    display:none;
+}
+
+#atr_table{
+    margin-top: 15px;
+    text-align:left;
+    display:inline-block;
+    vertical-align:top;
+}
+
+#legend{
+    height:150px;
+}
+
+#data_layer{
+    padding: 10px 0px 10px 0px;
+}
+
+#base_addition{
+    color:rgb(44, 62, 80);
+}
+
+
+#well_bar_label{
+    margin-top:10px;
+    display:inline-block;
+    width:30px;
+    text-align: right;
+}
+
+#high_well{
+    margin-top:140px;
+}
+
+#space{
+    height:120px;
+}
+
+
+#buffer_pointer{
+    height=150px;
+    display: inline-block;
 }

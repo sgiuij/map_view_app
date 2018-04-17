@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block app_navigation_items %}
-  <li><a href="{% url 'simple_app:home' %}">Home</a></li>
   <li class="separator"></li>
+  <li><a href="{% url 'simple_app:home' %}">Home</a></li>
   <li><a href="{% url 'simple_app:map_view' %}">Map View</a></li>
   <li><a href="{% url 'simple_app:data_services' %}">Data Services</a></li>
   <li><a href="{% url 'simple_app:mockup' %}">Mockup</a></li>
@@ -17,62 +17,102 @@
   <li class="separator"></li>
 
     <div id="base_addition">
-        <div class="radius_slider">
-          <input type="range" min="1" max="25" value="1" class="slider" id="input_range">
-            <div id="radius_output">
-                Value: <span id="radius_val"></span>
+
+        <div id="toggles_div">
+
+            <div class="side_toggle">
+                <div class="wells_toggle">
+                    <label class="switch">
+                      <input type="checkbox" id="wellLayer" value="wells layer" onclick="showLayers()">
+                      <span class="switchslider round"></span>
+                    </label>
+                    <div class="toggle_label">All Wells</div>
+                </div>
             </div>
+            <div class="side_toggle">
+                <div class="wells_toggle">
+                    <label class="switch">
+                      <input type="checkbox" id="majorAquiferLayer" value="wells layer" onclick="showLayers()">
+                      <span class="switchslider round"></span>
+                    </label>
+                    <div class="toggle_label">Major Aquifers</div>
+                </div>
+            </div>
+            <div class="side_toggle">
+                <div class="wells_toggle">
+                    <label class="switch">
+                      <input type="checkbox" id="minorAquiferLayer" value="wells layer" onclick="showLayers()">
+                      <span class="switchslider round"></span>
+                    </label>
+                    <div class="toggle_label">Minor Aquifers</div>
+                </div>
+            </div>
+            <div class="side_toggle">
+                <div class="wells_toggle">
+                    <label class="switch">
+                      <input type="checkbox" id="countyLayer" value="wells layer" onclick="showLayers()">
+                      <span class="switchslider round"></span>
+                    </label>
+                    <div class="toggle_label">Counties</div>
+                </div>
+            </div>
+
         </div>
-
-        <label class="switch">
-          <input type="checkbox" id="points_layer" value="wells layer" onclick="showLayers()" checked>
-          <span class="switchslider round"></span>
-        </label>
-
-        <label class="switch">
-          <input type="checkbox" id="waterlevel_layer" value="water level layer" onclick="showLayers()" checked>
-          <span class="switchslider round"></span>
-        </label>
         <br>
-        <button id="cn id_map" onclick="removeAll()">Clear All</button>
-
     </div>
 {% endblock %}
 
 {% block app_content %}
 
 <head>
-
     <title></title>
     <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/4.6/esri/css/main.css">
     <link rel="stylesheet" type="text/css" href="{% static 'simple_app/css/map_style.css' %}">
     <script src="https://js.arcgis.com/4.6/"></script>
     <script src="{% static 'simple_app/js/undergroundwater.js' %}" type="text/javascript"></script>
     <style type="text/css">
-
     </style>
     <script type="text/javascript"></script>
 </head>
+
 <body>
+    <div id="header">
+        <div id="data_layer">
+            <div class="radius_slider">
+              <input type="range" min="1" max="25" value="1" class="slider" id="input_range">
+                <div id="radius_output">
+                    Radius in Miles: <span id="radius_val"></span>
+                </div>
+            </div>
+            <div class="map_toggle">
+                <div class="wells_toggle">
+                    <label class="switch">
+                      <input type="checkbox" id="points_layer" value="well" onclick="showLayers()" checked>
+                      <span class="switchslider round"></span>
+                    </label>
+                    <div class="toggle_label">wells</div>
+                </div>
+            </div>
+            <div class="map_toggle">
+                <div class="wells_toggle">
+                    <label class="switch">
+                      <input type="checkbox" id="waterlevel_layer" value="well" onclick="showLayers()" checked>
+                      <span class="switchslider round"></span>
+                    </label>
+                    <div class="toggle_label">interpolation</div>
+                </div>
+            </div>
+            <br>
+            <div id="depth_div">
+                <div id="well_bar_label">
 
-<div id="header">
-    <div id="data_layer">
-        <input type="checkbox" id="wellLayer" name="All Wells" onclick="showLayers()">
-        <label>All Wells</label>
-        <input type="checkbox" id="majorAquiferLayer" name="Major Aquifers" onclick="showLayers()">
-        <label>Major Aquifers</label>
-        <br>
-        <input type="checkbox" id="minorAquiferLayer" name="Minor Aquifers" onclick="showLayers()">
-        <label>Minor Aquifers</label>
-        <input type="checkbox" id="countyLayer" name="Counties" onclick="showLayers()">
-        <label>Counties</label>
-        <br>
-        <div id="atr_table">
-            <!--<img src="{% static 'simple_app/images/attribute.jpg' %}" alt="">-->
+                </div>
+                <div id="atr_table">
+                </div>
+                <div id="buffer_pointer"></div>
+            </div>
+            <span></span>
         </div>
-
-    </div>
-
     </div>
     <div id="content">
 
