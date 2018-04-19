@@ -34,26 +34,6 @@ class SimpleApp(TethysAppBase):
                 url='simple-app/map_view',
                 controller='simple_app.controllers.map_view'
             ),
-            UrlMap(
-                name='data_services',
-                url='simple-app/data_services',
-                controller='simple_app.controllers.data_services'
-            ),
-            UrlMap(
-                name='about',
-                url='simple-app/about',
-                controller='simple_app.controllers.about'
-            ),
-            UrlMap(
-                name='proposal',
-                url='simple-app/proposal',
-                controller='simple_app.controllers.proposal'
-            ),
-            UrlMap(
-                name='mockup',
-                url='simple-app/mockup',
-                controller='simple_app.controllers.mockup'
-            ),
         )
 
         return url_maps

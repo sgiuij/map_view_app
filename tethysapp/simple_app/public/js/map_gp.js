@@ -7,13 +7,12 @@ var selectedWellLayer;
 var selectedBuffer;
 var radius;
 var radius_slider = document.getElementById("input_range");
-var output = document.getElementById("radius_val");
+var radius_output = document.getElementById("radius_val");
+const slider_base = 10.5;
+const slider_selected = 25;
+const slider_scale = 1.5;
+const slider_unit = "miles";
 
-output.innerHTML = radius_slider.value;
-radius_slider.oninput = function() {
-    output.innerHTML = this.value;
-    radius = output.innerHTML;
-}
 
 require([
     "esri/Map",
@@ -77,14 +76,20 @@ require([
     gp.outSpatialReference = { // autocasts as new SpatialReference()
         wkid: 102100 //EPSG3857
     };
-    gp_wells.outSpatialReference = { // autocasts as new SpatialReference()
-        wkid: 102100 //EPSG3857
+    gp_wells.outSpatialReference = {
+        wkid: 102100
     };
+
+    radius_output.innerHTML = radius_slider.value;
+    radius_slider.oninput = function() {
+        radius_output.innerHTML = this.value;
+        radius = radius_output.innerHTML;
+    }
 
     view.on("click", bufferPoint);
 
     function bufferPoint(event) {
-        cleanup();
+        cleanUp();
         graphicsLayer.removeAll();
         map.add(graphicsLayer);
         var point = new Point({
@@ -97,7 +102,8 @@ require([
         });
 
         view.center = point;
-        view.zoom = 10.5-(radius_slider.value/25*1.5);
+
+        view.zoom = slider_base-(radius_slider.value/slider_selected*slider_scale);
         graphicsLayer.add(inputGraphic);
         var inputGraphicContainer = [];
         inputGraphicContainer.push(inputGraphic);
@@ -106,7 +112,7 @@ require([
 
         var bfDistance = new LinearUnit();
         bfDistance.distance = radius;
-        bfDistance.units = "miles";
+        bfDistance.units = slider_unit;
 
         var params = {
             "Point": featureSet,
@@ -116,19 +122,19 @@ require([
 
         gp_wells.submitJob(params).then(completeCallback_wells, errBack_wells, statusCallback_wells);
         if (document.getElementById("waterlevel_layer").checked){
-            test(true);
+            buffer_check(true);
         }else{
-            test(false);
+            buffer_check(false);
         }
     }
 
-        function cleanup() {
+        function cleanUp() {
       // remove the geoprocessing result layer from the map
-             map.layers.forEach(function(layer, i) {
-             if (layer.title === "surface") {
-          map.layers.remove(layer);
-        }
-      });
+            map.layers.forEach(function(layer, i) {
+                if (layer.title === "surface") {
+                    map.layers.remove(layer);
+                }
+            });
     }
 
     function completeCallback(result){
@@ -142,8 +148,6 @@ require([
         resultLayer.opacity = 0.7;
         resultLayer.title = "surface";
         // add the result layer to the map
-        console.log("resultLayer")
-        console.log(resultLayer)
         map.layers.add(resultLayer);
         resultLayer.visible = false;
         if (document.getElementById("waterlevel_layer").checked){
@@ -177,13 +181,10 @@ require([
 
     function statusCallback_wells(data) {
         if (data.jobStatus==="job-submitted"){
-//            document.getElementById("low_well").innerHTML="16";
-
             document.getElementById("well_bar_label").innerHTML="<span id=\"low_well\">16</span>"+
                                                                     "<div id=\"space\"></div>"+
                                                                     "<span id=\"high_well\">4240</span>";
             document.getElementById("processing_display").innerHTML="<img src=\'/static/simple_app/images/loading.gif\'>";
-//            document.getElementById("high_well").innerHTML="4240";
         }
         if (data.jobStatus==="job-succeeded"){
             document.getElementById("processing_display").innerHTML=""
@@ -198,7 +199,6 @@ require([
             graphicsLayer.add(wells_feature[wells]);
             if (document.getElementById("points_layer").checked){
                 graphicsLayer.visible = true;
-                console.log("babycheck")
             }
         }
     }
@@ -217,64 +217,37 @@ require([
 
     function getGraphics(response) {
         if (response.results.length) {
-        var graphic = response.results[0].graphic;
+            var graphic = response.results[0].graphic;
             var attributes = graphic.attributes;
             var well_depth = attributes.WellDepth;
             var well_ID = attributes.FID_wells;
             var elevation = attributes.LandElev
-            console.log("333333333")
-            console.log(attributes)
+
             document.getElementById('buffer_pointer').innerHTML="<h6> well ID: "+well_ID+"</h6>"
                                                                 + "<h6> Well Depth: "+well_depth+" ft</h6>"
                                                                 + "<h6> Land Elevation: "+elevation+" ft</h6>"
-
         }
-        console.log(graphicsLayer)
-          console.log(highlight_marker)
-
-//        var highlight_marker = {
-//            type: "unique-value", // autocasts as new UniqueValueRenderer()
-//            field: "NAME",
-//            defaultSymbol: graphicsLayer.renderer.symbol ||
-//              graphicsLayer.renderer.defaultSymbol,
-//            uniqueValueInfos: [{
-//              value: name,
-//              symbol: {
-//                type: "simple-marker", // autocasts as new SimpleLineSymbol()
-//                color: "orange",
-//                width: 0.5,
-//              }
-//            }]
-//          };
-
         graphicsLayer.renderer = highlight_marker;
     }
-
-      // Reference the popupTemplate instance in the
-      // popupTemplate property of FeatureLayer
 
      wellLayer = new FeatureLayer({
         url: "http://geoserver2.byu.edu/arcgis/rest/services/UE_UW/tx_maps/FeatureServer/3",
         outFields: ["*"],
-//        popupTemplate: template,
         visible:false
       });
      majorAquiferLayer = new FeatureLayer({
         url: "http://geoserver2.byu.edu/arcgis/rest/services/UE_UW/tx_maps/FeatureServer/0",
         outFields: ["*"],
-//        popupTemplate: template,
         visible:false
       });
      minorAquiferLayer = new FeatureLayer({
         url: "http://geoserver2.byu.edu/arcgis/rest/services/UE_UW/tx_maps/FeatureServer/1",
         outFields: ["*"],
-//        popupTemplate: template,
         visible:false
       });
      countyLayer = new FeatureLayer({
         url: "http://geoserver2.byu.edu/arcgis/rest/services/UE_UW/tx_maps/FeatureServer/2",
         outFields: ["*"],
-//        popupTemplate: template,
         visible:false
       });
       map.add(wellLayer);
@@ -290,23 +263,7 @@ require([
       }
     });
 
-//function depthPointer(){
-//    $(document).ready(function() {
-//       var scale = false;
-//        $("#wel1").click(function() {
-//          if (!sideMenu) {
-//            $("#sidemenu").animate({left: "80px"});
-//            sideMenu = true;
-//          }
-//          else {
-//            $("#sidemenu").animate({left: "0px"});
-//            sideMenu = false;
-//          }
-//        });
-//    });
-//}
-
-function test(bool){
+function buffer_check(bool){
     if (bool===true){
         document.getElementById("depth_div").innerHTML="<div id=\"well_bar_label\"></div>"+
                 "<div id=\"atr_table\"></div>"+"<div id=\"buffer_pointer\"></div>";
@@ -316,21 +273,18 @@ function test(bool){
                                                                     "<span id=\"high_well\">4240</span>";
     }else{
         document.getElementById("depth_div").innerHTML="";
-        document.getElementById("atr_table").innerHTML="";
     }
 }
 
 function visibilityButton(bool){
     var item = "_items";
     var imgformat = 'imageFormat';
-    var kk = map.layers[item]
-    console.log(kk)
     for ( k in map.layers[item]){
         if (imgformat in map.layers[item][k]){
             map.layers[item][k]['visible']=bool;
         }
     }
-    test(bool);
+    buffer_check(bool);
 }
 
 function showLayers(){
@@ -346,7 +300,6 @@ function showLayers(){
     }
     if (document.getElementById("waterlevel_layer").checked){
         visibilityButton(true);
-//        app.resultLayer.visible = true;
     }else{
         visibilityButton(false);
     }
@@ -362,19 +315,5 @@ function showLayers(){
     }
     if (document.getElementById("countyLayer").checked){
         countyLayer.visible=true;
-    }
-}
-
-function removeAll(){
-    app.graphicsLayer.removeAll();
-
-    var item = "_items";
-    var imgformat = 'imageFormat';
-    var kk = map.layers[item]
-    console.log(kk)
-    for ( k in map.layers[item]){
-        if (imgformat in map.layers[item][k]){
-            delete map.layers[item][k]
-        }
     }
 }

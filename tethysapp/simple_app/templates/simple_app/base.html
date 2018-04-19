@@ -16,12 +16,7 @@
   <li><a href="{% url 'simple_app:home' %}">Home</a></li>
   <li class="separator"></li>
   <li><a href="{% url 'simple_app:map_view' %}">Map View</a></li>
-  <li><a href="{% url 'simple_app:data_services' %}">Data Services</a></li>
-  <li><a href="{% url 'simple_app:mockup' %}">Mockup</a></li>
-  <li><a href="{% url 'simple_app:proposal' %}">Proposal</a></li>
-  <li><a href="{% url 'simple_app:about' %}">About</a></li>
   <li class="separator"></li>
-
 {% endblock %}
 
 {% block app_content %}
@@ -30,7 +25,6 @@
 {% block content_dependent_styles %}
   {{ block.super }}
   <link href="{% static 'simple_app/css/main.css' %}" rel="stylesheet"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 {% endblock %}
 
 {% block scripts %}

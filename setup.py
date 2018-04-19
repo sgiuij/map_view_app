@@ -23,7 +23,7 @@ setup(
     author_email='',
     url='',
     license='',
-    packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
+    packages=find_packages(exclude=['ez_setup', 'examples', 'buffer_checks']),
     namespace_packages=['tethysapp', 'tethysapp.' + app_package],
     include_package_data=True,
     zip_safe=False,
